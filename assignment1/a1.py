@@ -25,8 +25,11 @@ class CommandInterface:
         self.width = 0
         self.height = 0
         self.player = 1
-        self.row_count = {}
+        self.row_count = {} # ex: { {row_num : {0: 0, 1: 0}}, {row_num_2 : {0: 0, 1: 0}} } 
         self.col_count = {}
+
+        self.DEBUG = False # Set to False before submission
+        self.ERROR = ""    # Error to output
 
     # Convert a raw string to a command and a list of arguments
     def process_command(self, str):
@@ -76,7 +79,7 @@ class CommandInterface:
 
         # Check for correct number of arguments
         if len(args) != 2:
-            print("= illegal move: {args} wrong number of arguments", file=sys.stderr)
+            if self.DEBUG: print("= illegal move: {args} wrong number of arguments", file=sys.stderr) # TODO: Check if neccesary: "[game] only requires the command status as output."
             return False
         
         # Check if the arguments are integers
@@ -84,25 +87,24 @@ class CommandInterface:
             self.width = int(args[0])
             self.height = int(args[1])
         except ValueError:
-            print("= illegal move: wrong type of arguements", file=sys.stderr)
+            if self.DEBUG: print("= illegal move: wrong type of arguements", file=sys.stderr) # TODO: Check if necessary: "[game] only requires the command status as output."
             return False
         
-        # Check if the width and height are more than one
-        # TODO: whats the min dimension size?------------------------
-        if self.width <= 1 <= 20 or self.height <= 1 <= 20: 
-            print("= illegal move: invalid dimensions", file=sys.stderr)
+        # Check if the width and height are in the range [1,20], inclusive.
+        if not (1 <= self.width <= 20) or not (1 <= self.height <= 20): 
+            if self.DEBUG: print("= illegal move: invalid dimensions", file=sys.stderr) # TODO: Check if necessary: "[game] only requires the command status as output."
             return False
         
         # Initialize the grid
+        self.grid=[] # Reset grid
         for _ in range(self.height):
             temp = []
             for _ in range(self.width):
                 temp.append(".")
-                
             self.grid.append(temp)
 
         # initialize row and col counts
-        for i in range(self. width):
+        for i in range(self.width):
             self.col_count[i] = {0: 0, 1: 0}
 
         for i in range(self.height):
@@ -117,209 +119,171 @@ class CommandInterface:
 
         # Check for correct number of arguments
         if len(args) != 0:
-            print("= illegal move: wrong number of arguments", file=sys.stderr)
+            if self.DEBUG: print("= illegal move: wrong number of arguments", file=sys.stderr) # TODO: Double check necessity
             return False
         
-        # Print grid
-        for i in self.grid:
-            for j in i:
+        # Print grid # grid is 2D array, self.grid[0] represents row 1.
+        for i in self.grid: # For each row:  
+            for j in i:     # For column in row:
                 print(j, end="")
             print() # new line
 
         return True
     
     def play(self, args):
-        # raise NotImplementedError("This command is not yet implemented.")
 
-        # Check for correct number of arguments
-        if len(args) != 3:
-            print("= illegal move: wrong number of arguments", file=sys.stderr)
+        if not self.canPlay(args, update=True):
+            print(f"= illegal move: {' '.join(args)} {self.ERROR}") # illegal move: [input] [error]
             return False
-
-        # Check if the arguments are integers
-        try:
-            x = int(args[0])
-            y = int(args[1])
-            play = int(args[2])
-            # print("x: ", x, "y: ", y, "play: ", play)
-        except ValueError:
-            print("= illegal move: wrong type of arguements", file=sys.stderr)
-            return False
-        
-        # Check if the x and y are within the grid
-        if x < 0 or x > self.width-1 or y < 0 or y > self.height-1:
-            print("= illegal move: wrong coordinate", file=sys.stderr)
-            return False
-        
-        #  Any third argument that is not a digit 0 or 1
-        if play not in [0, 1]:
-            print("= illegal move: wrong number", file=sys.stderr)
-            return False
-        
-        # Check if the cell is empty
-        if self.grid[y][x] != "." :
-            print("= illegal move: occupied", file=sys.stderr)
-            return False
-        
-        # check too many 0 or too many 1
-        for k, v in self.row_count.items():
-            if v[0] > math.ceil(self.height / 2) or v[1] > math.ceil(self.height / 2):
-                print("= illegal move: too many 0", file=sys.stderr)
-                return False
-            
-            if v[1] > math.ceil(self.height / 2):
-                print("= illegal move: too many 1", file=sys.stderr)
-                return False
-            
-        # update grid
-        self.grid[y][x] = play
-        
-        # check three in a row
-        for i in self.grid:
-            tracker = 0
-            prev = None
-
-            for j in i:
-                if j == prev and j.isdigit():
-                    tracker += 1
-                else:
-                    tracker = 0
-
-                if tracker == 2:
-                    print("= illegal move: three in a row", file=sys.stderr)
-                    self.grid[y][x] = "."
-                    return False
-                
-                prev = j
-        
-        # check three in a col
-        for col in range(len(self.grid[0])): 
-            tracker = 0
-            prev = None
-
-            for row in range(len(self.grid)):
-                if self.grid[row][col] == prev and self.grid[row][col].isdigit():
-                    tracker += 1
-                else:
-                    tracker = 0
-
-                if tracker == 2:
-                    print("= illegal move: three in a row", file=sys.stderr)
-                    self.grid[y][x] = "."
-                    return False
-                
-                prev = self.grid[row][col]
-
-        # Update the grid
-        self.row_count[y][play] += 1
-        self.col_count[x][play] += 1
 
         return True
     
     def legal(self, args):
-        # raise NotImplementedError("This command is not yet implemented.")
+       
+        if self.canPlay(args):
+            print("yes")
+        else:
+            print("no")
 
-        # Check for correct number of arguments
+        return True
+
+    def genmove(self, args):
+        # Iterate through every cell and try playing it
+        for row in range(self.height):      # row = y
+            for col in range(self.width):   # col = x
+                if self.canPlay([col, row, 0], update=True):
+                    print(f"{col} {row} {0}")
+                    return True
+                if self.canPlay([col, row, 1], update=True):
+                    print(f"{col} {row} {1}")
+                    return True
+                
+        print("resign")
+        return False
+    
+    def winner(self, args):
+        # Iterate through every cell and see if available
+        for row in range(self.height):      # row = y
+            for col in range(self.width):   # col = x
+                if self.canPlay([col, row, 0], update=False):
+                    print("unfinished")
+                    return True
+                if self.canPlay([col, row, 1], update=False):
+                    print("unfinished")
+                    return True
+                
+        # print the winning player
+        print(self.player + 1) 
+        return True    
+    
+    def canPlay(self, args, update = False):
+        # Check [errors] in the order given and save the first error only:
+
+        # 1. Check for correct number of arguments:
         if len(args) != 3:
-            print("no", file=sys.stderr)
+            if self.DEBUG: print("1.")
+            self.ERROR = "wrong number of arguments"
             return False
 
-        # Check if the arguments are integers
+        # 2.1 Check if the x or y coordinates are integers:
         try:
             x = int(args[0])
             y = int(args[1])
+        except ValueError:
+            if self.DEBUG: print("2.1")
+            self.ERROR = "wrong coordinate"
+            return False
+
+        # 2.2 Check if the x and y are within the grid
+        if x < 0 or x > self.width-1 or y < 0 or y > self.height-1:
+            if self.DEBUG: print("2.2")
+            self.ERROR = "wrong coordinate"
+            return False
+        
+        # 3.1 Check if the third argument is an Integer:
+        try:
             play = int(args[2])
         except ValueError:
-            print("no", file=sys.stderr)
+            if self.DEBUG: print("3.1")
+            self.ERROR = "wrong number"
             return False
         
-        # Check if the x and y are within the grid
-        if x < 0 or x > self.width-1 or y < 0 or y > self.height-1:
-            print("no", file=sys.stderr)
+        # 3.2 Check if the third argument that a digit 0 or 1
+        if play not in [0, 1]:
+            if self.DEBUG: print("3.2")
+            self.ERROR = "wrong number"
             return False
         
-        #  Any third argument that is not a digit 0 or 1
-        if play != 0 or play != 1:
-            print("no", file=sys.stderr)
-            return False
-        
-        # Check if the play is within the grid
-        if play != 1 or play != 0:
-            print("no", file=sys.stderr)
-            return False
-        
-        # Check if the cell is empty
+        # 4. Check if the cell is occupied
         if self.grid[y][x] != "." :
-            print("no", file=sys.stderr)
+            if self.DEBUG: print("4.")
+            self.ERROR = "occupied"
             return False
         
-        # check too many 0 or too many 1
-        for k, v in self.row_count.items():
-            if v[0] > math.ceil(self.height / 2) or v[1] > math.ceil(self.height / 2):
-                print("no", file=sys.stderr)
+        # 5.1 check three in a row
+        row = self.grid[y] # Only check the row being played
+        tracker = 0
+        for i in range(max(0, x - 2), min(self.width, x + 3)):  # Only check the range around [x-2,x+2] inclusive
+            if (row[i] == play):  # If it's the same as the current play
+                tracker += 1
+            elif i == x : # If we are looking at the play location
+                tracker += 1
+            else:
+                tracker = 0  
+
+            if tracker == 3: 
+                if self.DEBUG: print("5.1")
+                self.ERROR = "three in a row"
+                return False
+        
+        # 5.2 check three in a col
+        tracker = 0
+        for col in range(max(0, y - 2), min(self.height, y + 3)):  # Only check the range around [y-2,y+2] inclusive
+            if (self.grid[col][x] == play):  # If it's the same as the current play
+                tracker += 1
+            elif col == y: # If we are looking at the play location
+                tracker += 1
+            else:
+                tracker = 0
+
+            if tracker == 3:
+                if self.DEBUG: print("5.2")
+                self.ERROR = "three in a row"
                 return False
             
-            if v[1] > math.ceil(self.height / 2):
-                print("no", file=sys.stderr)
-                return False
-            
-        # update grid
-        self.grid[y][x] = play
+        # 6.1 Check for too many 0 or too many 1 in Row
+        row_dict = self.row_count[y] # Retrieve Row being played # ex: row_dict={0: 2, 1: 0} 
+        if row_dict[play]+1 > math.ceil(self.width / 2):
+            if self.DEBUG: print("6.1")
+            self.ERROR = f"too many {play}"
+            return False
+        # 6.2 Check for too many 0 or too many 1 in Column
+        col_dict = self.col_count[x] # Retrieve Column being played  # ex: col_dict={0: 0, 1: 0} }
+        if col_dict[play]+1 > math.ceil(self.height / 2):
+            if self.DEBUG: print("6.2")
+            self.ERROR = f"too many {play}"
+            return False
         
-        # check three in a row
-        for i in self.grid:
-            tracker = 0
-            prev = None
+        # Update Grid if neccessary
+        if update == True:
+            # update grid
+            self.grid[y][x] = play
+            self.row_count[y][play] += 1
+            self.col_count[x][play] += 1
+            self.player = not self.player # switch player
 
-            for j in i:
-                if j == prev and j.isdigit():
-                    tracker += 1
-                else:
-                    tracker = 0
-
-                if tracker == 2:
-                    print("no", file=sys.stderr)
-                    self.grid[y][x] = "."
-                    return False
-                
-                prev = j
-        
-        # check three in a col
-        for col in range(len(self.grid[0])): 
-            tracker = 0
-            prev = None
-
-            for row in range(len(self.grid)):
-                if self.grid[row][col] == prev and self.grid[row][col].isdigit():
-                    tracker += 1
-                else:
-                    tracker = 0
-
-                if tracker == 2:
-                    print("no", file=sys.stderr)
-                    self.grid[y][x] = "."
-                    return False
-                
-                prev = self.grid[row][col]
-
-        # revert back
-        self.grid[y][x] = "."
-        print("yes", file=sys.stderr)
-
-        return True
-    
-    def genmove(self, args):
-        raise NotImplementedError("This command is not yet implemented.")
-        return True
-    
-    def winner(self, args):
-        raise NotImplementedError("This command is not yet implemented.")
         return True
     
     #======================================================================================
-    # End of functions requiring implementation
+    # End of functions requiring implementation                                                             
     #======================================================================================
 
 if __name__ == "__main__":
     interface = CommandInterface()
+
+    # Check if '--DEBUG' is used as a command line argument. ex usage: python3 a1.py --DEBUG
+    if len(sys.argv)>1 and sys.argv[1]=="--DEBUG":
+        print("Debugging mode activated")
+        interface.DEBUG=True 
+
     interface.main_loop()
