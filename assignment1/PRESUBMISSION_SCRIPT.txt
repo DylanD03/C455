@@ -1,0 +1,13 @@
+PRESUBMISSION_SCRIPT.txt
+
+tar --exclude=.DS_Store -cvzf assignment1.tgz assignment1
+
+script presubmission.log
+mkdir testdir
+cp assignment1.tgz testdir/
+cd testdir
+tar -xvzf assignment1.tgz
+cd assignment1
+python3 a1test.py a1.py assignment1-public-tests.txt
+
+exit
