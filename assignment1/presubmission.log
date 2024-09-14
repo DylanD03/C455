@@ -1,0 +1,30 @@
+Script started on 2024-09-13 19:51:06-06:00 [TERM="xterm-256color" TTY="/dev/pts/6" COLUMNS="80" LINES="24"]
+dndu@ohaton:~/Desktop/C455>mkdir testdir
+dndu@ohaton:~/Desktop/C455>cp assignment1.tgz testdir/
+dndu@ohaton:~/Desktop/C455>cd testdir
+dndu@ohaton:~/Desktop/C455/testdir>tar -xvzf assignment1.tgz
+assignment1/
+assignment1/a1test.py
+assignment1/a1.py
+assignment1/assignment1-public-tests.txt
+assignment1/readme.txt
+assignment1/.DS_Store
+dndu@ohaton:~/Desktop/C455/testdir>cd assignment1
+dndu@ohaton:~/Desktop/C455/testdir/assignment1>python3 a1test.py a1.py assignment1-public-tests.txt
+Test 1 / 59 (2%)Test 2 / 59 (3%)Test 3 / 59 (5%)Test 4 / 59 (7%)Test 5 / 59 (8%)Test 6 / 59 (10%)Test 7 / 59 (12%)Test 8 / 59 (14%)Test 9 / 59 (15%)Test 10 / 59 (17%)Test 11 / 59 (19%)Test 12 / 59 (20%)Test 13 / 59 (22%)Test 14 / 59 (24%)Test 15 / 59 (25%)Test 16 / 59 (27%)Test 17 / 59 (29%)Test 18 / 59 (31%)Test 19 / 59 (32%)Test 20 / 59 (34%)Test 21 / 59 (36%)Test 22 / 59 (37%)Test 23 / 59 (39%)Test 24 / 59 (41%)Test 25 / 59 (42%)Test 26 / 59 (44%)Test 27 / 59 (46%)Test 28 / 59 (47%)Test 29 / 59 (49%)Test 30 / 59 (51%)Test 31 / 59 (53%)Test 32 / 59 (54%)Test 33 / 59 (56%)Test 34 / 59 (58%)Test 35 / 59 (59%)Test 36 / 59 (61%)Test 37 / 59 (63%)Test 38 / 59 (64%)Test 39 / 59 (66%)Test 40 / 59 (68%)Test 41 / 59 (69%)Test 42 / 59 (71%)Test 43 / 59 (73%)Test 44 / 59 (75%)Test 45 / 59 (76%)Test 46 / 59 (78%)Test 47 / 59 (80%)Test 48 / 59 (81%)Test 49 / 59 (83%)Test 50 / 59 (85%)Test 51 / 59 (86%)Test 52 / 59 (88%)Test 53 / 59 (90%)Test 54 / 59 (92%)Test 55 / 59 (93%)Test 56 / 59 (95%)Test 57 / 59 (97%)Test 58 / 59 (98%)Test 59 / 59 (100%)
+[34m	Failed commands (0):
+[0m
+[34m	Successful commands with mismatched outputs: (0):
+[0m
+[34m	Summary report:
+[0m
+59 Tests performed
+[32m59 Successful (100%)[0m
+[31m0 Failed (0%)[0m
+[31m0 Mismatched (0%)[0m
+
+Finished in 0.05 seconds.
+dndu@ohaton:~/Desktop/C455/testdir/assignment1>exit
+exit
+
+Script done on 2024-09-13 19:51:32-06:00 [COMMAND_EXIT_CODE="0"]
