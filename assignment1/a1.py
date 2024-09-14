@@ -133,7 +133,7 @@ class CommandInterface:
     def play(self, args):
 
         if not self.canPlay(args, update=True):
-            print(f"= illegal move: {' '.join(args)} {self.ERROR}") # illegal move: [input] [error]
+            print(f"= illegal move: {' '.join(args)} {self.ERROR}") #= illegal move: [input] [error]
             return False
 
         return True
