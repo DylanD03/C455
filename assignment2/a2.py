@@ -8,6 +8,30 @@ import signal
 import math
 import time
 
+
+class TranspositionTable:
+# Table is stored in a dictionary, with board code as key, 
+# Source: https://webdocs.cs.ualberta.ca/~mmueller/courses/cmput455/python/transposition_table_simple.py
+
+    # Empty dictionary
+    def __init__(self):
+        self.table = {}
+
+    # Used to print the whole table with print(tt)
+    def __repr__(self):
+        return self.table.__repr__()
+
+    def store(self, code, score):
+        # Score is either True (Win) or False (Loss)
+        # Code is used as a key
+        self.table[code] = score
+
+    # Python dictionary returns 'None' if key not found by get()
+    def lookup(self, code):
+        return self.table.get(code)
+    
+
+
 class CommandInterface:
 
     def __init__(self):
@@ -362,37 +386,58 @@ class CommandInterface:
                 if self.canPlay([col, row, 1], update=False):
                      all_moves.append([col, row, 1])
         return all_moves
-            
-    def negamaxBoolean(self):
-        # negamaxBoolean is always in perspective of current player (self.player)
-        if self.endOfGame():
-            return self.staticallyEvaluateForToPlay()
-        for move in self.getLegalMoves():
-            self.play(move)
-            success = not self.negamaxBoolean()
-            self.winning_move = move
-            self.undoMove(move)
-            if success:
-                return True
-        return False
-    
-    def staticallyEvaluateForToPlay(self):
-        # At end of Binary Game, whoever is the current player loses
-        return False # current player loses
     
     def undoMove(self, last_move):
-        # last_move = [col, row, 0]
+        # Read arguments # last_move = [col, row, 0]
         x = last_move[0] # col = x
         y = last_move[1] # row = y
         play = last_move[2]
+
+        # Undo move
         self.grid[y][x] = "."
         self.row_count[y][play] -= 1
         self.col_count[x][play] -= 1
         self.player = self.otherPlayer() # undo player
 
+    
+    def storeResult(self, tt, result):
+        # Stores our current state into the transposition table.
+        # Credit: https://webdocs.cs.ualberta.ca/~mmueller/courses/cmput455/python/boolean_negamax_tt.py
+        tt.store(self.code(), result)
+        return result
+    
+    def code(self):
+        # Returns the encoded (tuple) version of our current state
+        # Map each row into a tuple. Then wrap all rows in a tuple.
+        board_tuple = tuple(map(tuple, self.grid))  # Ex: ((1, 0), ('.', 1))
+        return (board_tuple, self.player) 
+        
+    def negamaxBoolean(self, tt):
+        # negamaxBoolean is always in perspective of current player (self.player)
+        result = tt.lookup(self.code())
+        if result != None:
+            return result # Negamax result found in tt
+        if self.endOfGame():
+            result = self.staticallyEvaluateForToPlay()
+            return self.storeResult(tt, result) 
+        for move in self.getLegalMoves():
+            self.play(move)
+            success = not self.negamaxBoolean(tt)
+            self.winning_move = move
+            self.undoMove(move)
+            if success:
+                return self.storeResult(tt, True) # Store for later
+        return self.storeResult(tt, False) 
+    
+    def staticallyEvaluateForToPlay(self):
+        # At end of Binary Game, whoever is the current player loses
+        return False # current player loses
+    
 
     # New function to be implemented for assignment 2
     def solve(self, args):
+        # Instantiate our Transposition Table
+        tt = TranspositionTable()
 
         # Raise a TimeoutError after a certain time limit is reached.
         signal.signal(signal.SIGALRM, self.handler)
@@ -401,7 +446,7 @@ class CommandInterface:
         # Execute solver and handle timeout signals
         try:    
             # Solving always starts with the current player (toPlay) going first
-            if self.negamaxBoolean():
+            if self.negamaxBoolean(tt):
                 # Current Player has a winning solution
                 print(f'{self.player} {self.winning_move[0]} {self.winning_move[1]} {self.winning_move[2]}')  # Output: winner <move>. Where move is formatted as: x y digit
             else:
@@ -410,7 +455,7 @@ class CommandInterface:
                     self.play(move) 
 
                     # Find a winning response
-                    if not self.negamaxBoolean():
+                    if not self.negamaxBoolean(tt):
                         # Other player cannot find a winning solution
                         print("unknown") # Neither perspective is solved.
                         self.undoMove(move)
