@@ -404,6 +404,13 @@ class CommandInterface:
         # Stores our current state into the transposition table.
         # Credit: https://webdocs.cs.ualberta.ca/~mmueller/courses/cmput455/python/boolean_negamax_tt.py
         tt.store(self.code(), result)
+
+        # TODO: tt.store Reflections and Rotations
+            # Rotate/Reflect the board and store it. Much faster than recomputing from scratch.
+
+        # TODO: tt.store Flipped versions (i.e. 1->0 and 0->1)
+            # Suppose we had the board ([[1,0],[0,0]], self.player=1)
+            # We could store ([[0,1], [1,1]], self.player=1)
         return result
     
     def code(self):
@@ -443,7 +450,6 @@ class CommandInterface:
         signal.signal(signal.SIGALRM, self.handler)
         signal.alarm(self.solvertimelimit) # set time limit
 
-        # Execute solver and handle timeout signals
         try:    
             # Solving always starts with the current player (toPlay) going first
             if self.negamaxBoolean(tt):
@@ -460,11 +466,13 @@ class CommandInterface:
                         print("unknown") # Neither perspective is solved.
                         self.undoMove(move)
                         break # exit loop
-
+                    
+                    # Try another move.
                     self.undoMove(move)
 
                 # Other player has a winning solution for every move Current Player can make. 
                 print(f'{self.otherPlayer()}') # Print the winning player's number
+        
         except TimeoutError:
              # Write unknown if your solver cannot solve the game within the current time limit. 
             print("unknown")
