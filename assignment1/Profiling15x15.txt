@@ -1,0 +1,63 @@
+
+PROFILING TEST: SIMULATE 100 GAMES ON 15x15 BOARD 
+
+#===============================================================================================
+# VVVVVVVVVV START OF MY OPTIMIZED A2.PY FILE. VVVVVVVVVV
+#===============================================================================================
+
+11106406 function calls in 6.648 seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    6.648    6.648 <string>:1(<module>)
+        1    0.000    0.000    0.000    0.000 a1.py:12(__init__)
+    19700    0.904    0.000    3.287    0.000 a1.py:153(genmove)
+    19800    0.897    0.000    3.345    0.000 a1.py:186(profile_winner)
+  8430000    4.242    0.000    4.713    0.000 a1.py:242(canPlay)
+      100    0.005    0.000    0.008    0.000 a1.py:77(game)
+        1    0.000    0.000    6.648    6.648 profiler.py:11(play_a1_games)
+        1    0.009    0.009    6.648    6.648 profiler.py:17(play_games)
+        1    0.000    0.000    6.648    6.648 {built-in method builtins.exec}
+      100    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+  1068400    0.199    0.000    0.199    0.000 {built-in method builtins.max}
+  1068400    0.227    0.000    0.227    0.000 {built-in method builtins.min}
+    39500    0.118    0.000    0.118    0.000 {built-in method builtins.print}
+   436400    0.043    0.000    0.043    0.000 {built-in method math.ceil}
+    24000    0.003    0.000    0.003    0.000 {method 'append' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+
+#===============================================================================================
+# VVVVVVVVVV START OF THE DEFAULT A2.PY FILE. VVVVVVVVVV
+#===============================================================================================
+
+81553813 function calls in 42.019 seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000   42.019   42.019 <string>:1(<module>)
+        1    0.000    0.000    0.000    0.000 a2.py:11(__init__)
+    20278    0.062    0.000    0.072    0.000 a2.py:121(is_legal_reason)
+ 18295200   25.828    0.000   30.010    0.000 a2.py:157(is_legal)
+    20278    0.039    0.000    0.117    0.000 a2.py:201(play)
+    40656   10.004    0.000   41.171    0.001 a2.py:240(get_legal_moves)
+    20278    0.040    0.000   20.910    0.001 a2.py:249(genmove)
+    20378    0.202    0.000   20.896    0.001 a2.py:269(profile_winner)
+      100    0.001    0.000    0.001    0.000 a2.py:63(arg_check)
+      100    0.001    0.000    0.002    0.000 a2.py:97(game)
+        1    0.000    0.000   42.019   42.019 profiler.py:11(play_a1_games)
+        1    0.212    0.212   42.019   42.019 profiler.py:17(play_games)
+    20278    0.018    0.000    0.028    0.000 random.py:242(_randbelow_with_getrandbits)
+    20278    0.021    0.000    0.057    0.000 random.py:291(randrange)
+    20278    0.012    0.000    0.069    0.000 random.py:332(randint)
+    60834    0.007    0.000    0.007    0.000 {built-in method _operator.index}
+        1    0.000    0.000   42.019   42.019 {built-in method builtins.exec}
+ 54664370    4.251    0.000    4.251    0.000 {built-in method builtins.len}
+    40656    0.194    0.000    0.194    0.000 {built-in method builtins.print}
+  8240008    1.109    0.000    1.109    0.000 {method 'append' of 'list' objects}
+    20278    0.004    0.000    0.004    0.000 {method 'bit_length' of 'int' objects}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+    29181    0.007    0.000    0.007    0.000 {method 'getrandbits' of '_random.Random' objects}
+    20278    0.006    0.000    0.006    0.000 {method 'join' of 'str' objects}
+      100    0.000    0.000    0.000    0.000 {method 'split' of 'str' objects}

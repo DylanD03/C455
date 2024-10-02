@@ -1,13 +1,14 @@
-# CMPUT 455 Assignment 1 starter code
+# CMPUT 455 Assignment 2 starter code
 # Implement the specified commands to complete the assignment
-# Full assignment specification here: https://webdocs.cs.ualberta.ca/~mmueller/courses/cmput455/assignments/a1.html
+# Full assignment specification here: https://webdocs.cs.ualberta.ca/~mmueller/courses/cmput455/assignments/a2.html
 
 import sys
+import random
+import signal
 import math
+import time
 
 class CommandInterface:
-    # The following is already defined and does not need modification
-    # However, you may change or add to this code as you see fit, e.g. adding class variables to init
 
     def __init__(self):
         # Define the string to function command mapping
@@ -18,18 +19,29 @@ class CommandInterface:
             "play" : self.play,
             "legal" : self.legal,
             "genmove" : self.genmove,
-            "winner" : self.winner
+            "winner" : self.winner,
+            "timelimit" : self.timelimit,
+            "solve" : self.solve
         }
 
+        # Assignment 2 Variables
+        self.solvertimelimit = 1  # Before the first timelimit command is given, the default should be set to 1 second.
+        self.winning_move = None  # [x, y, play]
+
+        # Assignment 1 Variables
         self.grid = []
         self.width = 0
         self.height = 0
-        self.player = 1
+        self.player = 1     
         self.row_count = {} # ex: { {row_num : {0: 0, 1: 0}}, {row_num_2 : {0: 0, 1: 0}} } 
         self.col_count = {}
 
         self.DEBUG = False # Set to False before submission
         self.ERROR = ""    # Error to output
+    
+    #===============================================================================================
+    # VVVVVVVVVV START of PREDEFINED FUNCTIONS. DO NOT MODIFY. VVVVVVVVVV
+    #===============================================================================================
 
     # Convert a raw string to a command and a list of arguments
     def process_command(self, str):
@@ -50,7 +62,7 @@ class CommandInterface:
         
     # Will continuously receive and execute commands
     # Commands should return True on success, and False on failure
-    # Commands will automatically print '= 1' at the end of execution on success
+    # Every command will print '= 1' or '= -1' at the end of execution to indicate success or failure respectively
     def main_loop(self):
         while True:
             str = input()
@@ -60,6 +72,26 @@ class CommandInterface:
             if self.process_command(str):
                 print("= 1\n")
 
+    # Will make sure there are enough arguments, and that they are valid numbers
+    # Not necessary for commands without arguments
+    def arg_check(self, args, template):
+        converted_args = []
+        if len(args) < len(template.split(" ")):
+            print("Not enough arguments.\nExpected arguments:", template, file=sys.stderr)
+            print("Recieved arguments: ", end="", file=sys.stderr)
+            for a in args:
+                print(a, end=" ", file=sys.stderr)
+            print(file=sys.stderr)
+            return False
+        for i, arg in enumerate(args):
+            try:
+                converted_args.append(int(arg))
+            except ValueError:
+                print("Argument '" + arg + "' cannot be interpreted as a number.\nExpected arguments:", template, file=sys.stderr)
+                return False
+        args = converted_args
+        return True
+
     # List available commands
     def help(self, args):
         for command in self.command_dict:
@@ -68,12 +100,14 @@ class CommandInterface:
         print("exit")
         return True
 
-    #======================================================================================
-    # End of predefined functionality. You will need to implement the following functions.
-    # Arguments are given as a list of strings
-    # We will only test error handling of the play command
-    #======================================================================================
+    #===============================================================================================
+    # ɅɅɅɅɅɅɅɅɅɅ END OF PREDEFINED FUNCTIONS. ɅɅɅɅɅɅɅɅɅɅ
+    #===============================================================================================
 
+    #===============================================================================================
+    # VVVVVVVVVV START OF ASSIGNMENT 2 FUNCTIONS. ADD/REMOVE/MODIFY AS NEEDED. VVVVVVVV
+                    # Dylan: I optimized and tested these functions 
+    #===============================================================================================
     def game(self, args):
         # raise NotImplementedError("This command is not yet implemented.")
 
@@ -180,27 +214,9 @@ class CommandInterface:
                     return True
                 
         # print the winning player
-        print(self.player + 1) 
+        print(self.otherPlayer())  # Print the other player
         return True    
 
-    def profile_winner(self, args):
-        # Iterate through every cell and see if available
-        for row in range(self.height):      # row = y
-            for col in range(self.width):   # col = x
-                # Check if playing 0 is possible
-                if self.canPlay([col, row, 0], update=False):
-                    print("unfinished")
-                    return False
-                # Check if playing 1 is possible
-                if self.canPlay([col, row, 1], update=False):
-                    print("unfinished")
-                    return False
-                
-        # print the winning player
-        print(self.player + 1) 
-        return True    
-
-    
     def validInput(self, args):
         # 1. Check for correct number of arguments:
         if len(args) != 3:
@@ -240,7 +256,7 @@ class CommandInterface:
         return True
     
     def canPlay(self, args, update = False):
-        # Check [errors] in the order given and save the first error only:
+        # Assumption: input is already validated
         x = int(args[0])
         y = int(args[1])
         play = int(args[2])
@@ -298,20 +314,134 @@ class CommandInterface:
             self.grid[y][x] = play
             self.row_count[y][play] += 1
             self.col_count[x][play] += 1
-            self.player = not self.player # switch player
+            self.player = self.otherPlayer() # Swap players 1->2 or 2->1
 
         return True
-    
-    #======================================================================================
-    # End of functions requiring implementation                                                             
-    #======================================================================================
 
+    def otherPlayer(self):
+        return 2 if self.player == 1 else 1
+    
+    #===============================================================================================
+    # ɅɅɅɅɅɅɅɅɅɅ NEW ASSIGNMENT 2 FUNCTIONS. ɅɅɅɅɅɅɅɅɅɅ
+    #===============================================================================================
+
+    # Set a timeout period
+    def timelimit(self, args):
+        # This function is called by typing "timeout [seconds]" into the game interface, where seconds is an integer.
+        seconds = int(args[0]) # seconds is an integer in the range [1,100]
+        self.solvertimelimit = seconds
+        return True
+    
+    # Handles timeout signal
+    def handler(self, signum, frame):
+        # This function is called when the time limit is reached.
+        raise TimeoutError() 
+    
+    def endOfGame(self):
+        # Iterate through every cell and see if available
+        for row in range(self.height):      # row = y
+            for col in range(self.width):   # col = x
+                # Check if playing 0 is possible
+                if self.canPlay([col, row, 0], update=False):
+                    return False
+                # Check if playing 1 is possible
+                if self.canPlay([col, row, 1], update=False):
+                    return False
+        # No Possible moves for the player
+        return True    
+    
+    def getLegalMoves(self):
+        all_moves = []
+        # Iterate through every cell and see if available
+        for row in range(self.height):      # row = y
+            for col in range(self.width):   # col = x
+                # Check if playing 0 is possible
+                if self.canPlay([col, row, 0], update=False):
+                    all_moves.append([col, row, 0])
+                # Check if playing 1 is possible
+                if self.canPlay([col, row, 1], update=False):
+                     all_moves.append([col, row, 1])
+        return all_moves
+            
+    def negamaxBoolean(self):
+        # negamaxBoolean is always in perspective of current player (self.player)
+        if self.endOfGame():
+            return self.staticallyEvaluateForToPlay()
+        for move in self.getLegalMoves():
+            self.play(move)
+            success = not self.negamaxBoolean()
+            self.winning_move = move
+            self.undoMove(move)
+            if success:
+                return True
+        return False
+    
+    def staticallyEvaluateForToPlay(self):
+        # At end of Binary Game, whoever is the current player loses
+        return False # current player loses
+    
+    def undoMove(self, last_move):
+        # last_move = [col, row, 0]
+        x = last_move[0] # col = x
+        y = last_move[1] # row = y
+        play = last_move[2]
+        self.grid[y][x] = "."
+        self.row_count[y][play] -= 1
+        self.col_count[x][play] -= 1
+        self.player = self.otherPlayer() # undo player
+
+
+    # New function to be implemented for assignment 2
+    def solve(self, args):
+
+        # Raise a TimeoutError after a certain time limit is reached.
+        signal.signal(signal.SIGALRM, self.handler)
+        signal.alarm(self.solvertimelimit) # set time limit
+
+        # Execute solver and handle timeout signals
+        try:    
+            # Solving always starts with the current player (toPlay) going first
+            if self.negamaxBoolean():
+                # Current Player has a winning solution
+                print(f'{self.player} {self.winning_move[0]} {self.winning_move[1]} {self.winning_move[2]}')  # Output: winner <move>. Where move is formatted as: x y digit
+            else:
+                # See if other player has a winning solution
+                for move in self.getLegalMoves():
+                    self.play(move) 
+
+                    # Find a winning response
+                    if not self.negamaxBoolean():
+                        # Other player cannot find a winning solution
+                        print("unknown") # Neither perspective is solved.
+                        self.undoMove(move)
+                        break # exit loop
+
+                    self.undoMove(move)
+
+                # Other player has a winning solution for every move Current Player can make. 
+                print(f'{self.otherPlayer()}') # Print the winning player's number
+        except TimeoutError:
+             # Write unknown if your solver cannot solve the game within the current time limit. 
+            print("unknown")
+        finally: 
+            signal.alarm(0) # disable signal timer
+
+        return True
+
+    
+    #===============================================================================================
+    # ɅɅɅɅɅɅɅɅɅɅ END OF ASSIGNMENT 2 FUNCTIONS. ɅɅɅɅɅɅɅɅɅɅ
+    #===============================================================================================
+    
 if __name__ == "__main__":
     interface = CommandInterface()
-
-    # Check if '--DEBUG' is used as a command line argument. ex usage: python3 a1.py --DEBUG
-    if len(sys.argv)>1 and sys.argv[1]=="--DEBUG":
-        print("Debugging mode activated")
-        interface.DEBUG=True 
-
     interface.main_loop()
+
+
+
+
+
+
+
+
+
