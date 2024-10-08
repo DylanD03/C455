@@ -1,0 +1,206 @@
+Script started on 2024-10-07 21:54:27-06:00 [TERM="xterm-256color" TTY="/dev/pts/10" COLUMNS="118" LINES="29"]
+dndu@ohaton:~/Desktop/C455/C455>mkdir testdir
+dndu@ohaton:~/Desktop/C455/C455>cp assignment2.tgz testdir/
+dndu@ohaton:~/Desktop/C455/C455>cd testdir
+dndu@ohaton:~/Desktop/C455/C455/testdir>tar -xvzf assignment2.tgz
+assignment2/
+assignment2/.nfs000000000000cc980000010b
+assignment2/a2test.py
+assignment2/assignment2-public-tests.txt
+assignment2/a2.py
+dndu@ohaton:~/Desktop/C455/C455/testdir>cd assignment2
+dndu@ohaton:~/Desktop/C455/C455/testdir/assignment2>python3 a2test.py a2.py assignment2-public-tests.txt
+Test 1 / 109 (1%)Test 2 / 109 (2%)Test 3 / 109 (3%)Test 4 / 109 (4%)Test 5 / 109 (5%)Test 6 / 109 (6%)Test 7 / 109 (6%)Test 8 / 109 (7%)Test 9 / 109 (8%)Test 10 / 109 (9%)Test 11 / 109 (10%)Test 12 / 109 (11%)Test 13 / 109 (12%)Test 14 / 109 (13%)Test 15 / 109 (14%)Test 16 / 109 (15%)Test 17 / 109 (16%)Test 18 / 109 (17%)Test 19 / 109 (17%)Test 20 / 109 (18%)Test 21 / 109 (19%)Test 22 / 109 (20%)Test 23 / 109 (21%)Test 24 / 109 (22%)Test 25 / 109 (23%)Test 26 / 109 (24%)Test 27 / 109 (25%)Test 28 / 109 (26%)Test 29 / 109 (27%)Test 30 / 109 (28%)Test 31 / 109 (28%)Test 32 / 109 (29%)Test 33 / 109 (30%)Test 34 / 109 (31%)Test 35 / 109 (32%)Test 36 / 109 (33%)Test 37 / 109 (34%)Test 38 / 109 (35%)Test 39 / 109 (36%)Test 40 / 109 (37%)Test 41 / 109 (38%)^CTraceback (most recent call last):
+  File "a2test.py", line 262, in <module>
+    test_assignment(sys.argv[1], sys.argv[2], verbose=verbose)
+  File "a2test.py", line 242, in test_assignment
+    s, f, m = test_process(proc, tests, verbose, not marking)
+  File "a2test.py", line 191, in test_process
+    perform_test(process, test)
+  File "a2test.py", line 172, in perform_test
+    test.passed, test.received, test.notes = send_command(process, test.command, expected_fail="= -1" in test.expected, to_mark=test.to_mark)
+  File "a2test.py", line 155, in send_command
+    line = process.stdout.readline()
+KeyboardInterrupt
+
+dndu@ohaton:~/Desktop/C455/C455/testdir/assignment2>clear
+[H[2J[3Jdndu@ohaton:~/Desktop/C455/C455/testdir/assignment2>ls
+a2.py  a2test.py  assignment2-public-tests.txt
+dndu@ohaton:~/Desktop/C455/C455/testdir/assignment2>rm[K[K^C
+dndu@ohaton:~/Desktop/C455/C455/testdir/assignment2>rrm assignment2-public-tests.txt [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kcd ./
+dndu@ohaton:~/Desktop/C455/C455/testdir/assignment2>c[Kls
+a2.py  a2test.py  assignment2-public-tests.txt
+dndu@ohaton:~/Desktop/C455/C455/testdir/assignment2>cd ../
+dndu@ohaton:~/Desktop/C455/C455/testdir>cd ../
+dndu@ohaton:~/Desktop/C455/C455>ls
+assignment1  assignment2  assignment2.tgz  go0and1  gogui  presubmission.log  testdir
+dndu@ohaton:~/Desktop/C455/C455>rm -rf testdir
+dndu@ohaton:~/Desktop/C455/C455>rm presubmission.log 
+rm: remove regular empty file 'presubmission.log'? rm    y
+dndu@ohaton:~/Desktop/C455/C455>rm -r[Kf assignmentt[K2.tgz 
+dndu@ohaton:~/Desktop/C455/C455>ls
+assignment1  assignment2  go0and1  gogui
+dndu@ohaton:~/Desktop/C455/C455>clear
+[H[2J[3Jdndu@ohaton:~/Desktop/C455/C455>ls
+assignment1  assignment2  go0and1  gogui
+dndu@ohaton:~/Desktop/C455/C455>ls
+assignment1  assignment2  go0and1  gogui
+dndu@ohaton:~/Desktop/C455/C455>ear
+bash: ear: command not found
+dndu@ohaton:~/Desktop/C455/C455>ls
+assignment1  assignment2  go0and1  gogui
+dndu@ohaton:~/Desktop/C455/C455>tar --exclude=.DS_Store --exclude='assignment2/' --exclude='assignment2/.nfs000000000000cc980000010b' -cvzf assignment2.tgz assignment2
+assignment2/
+assignment2/a2test.py
+assignment2/assignment2-public-tests.txt
+assignment2/a2.py
+dndu@ohaton:~/Desktop/C455/C455>script presubmission.log
+Script started, file is presubmission.log
+dndu@ohaton:~/Desktop/C455/C455>mkdir testdir
+dndu@ohaton:~/Desktop/C455/C455>cp assignment2.tgz testdir/
+dndu@ohaton:~/Desktop/C455/C455>cd testdir
+dndu@ohaton:~/Desktop/C455/C455/testdir>tar -xvzf assignment2.tgz
+assignment2/
+assignment2/a2test.py
+assignment2/assignment2-public-tests.txt
+assignment2/a2.py
+dndu@ohaton:~/Desktop/C455/C455/testdir>cd assignment2
+dndu@ohaton:~/Desktop/C455/C455/testdir/assignment2>python3 a2test.py a2.py assignment2-public-tests.txt
+Test 1 / 109 (1%)Test 2 / 109 (2%)Test 3 / 109 (3%)Test 4 / 109 (4%)Test 5 / 109 (5%)Test 6 / 109 (6%)Test 7 / 109 (6%)Test 8 / 109 (7%)Test 9 / 109 (8%)Test 10 / 109 (9%)Test 11 / 109 (10%)Test 12 / 109 (11%)Test 13 / 109 (12%)Test 14 / 109 (13%)Test 15 / 109 (14%)Test 16 / 109 (15%)Test 17 / 109 (16%)Test 18 / 109 (17%)Test 19 / 109 (17%)Test 20 / 109 (18%)Test 21 / 109 (19%)Test 22 / 109 (20%)Test 23 / 109 (21%)Test 24 / 109 (22%)Test 25 / 109 (23%)Test 26 / 109 (24%)^Z
+[1]+  Stopped                 python3 a2test.py a2.py assignment2-public-tests.txt
+dndu@ohaton:~/Desktop/C455/C455/testdir/assignment2>clear
+[H[2J[3Jdndu@ohaton:~/Desktop/C455/C455/testdir/assignment2>ls
+a2.py  a2test.py  assignment2-public-tests.txt
+dndu@ohaton:~/Desktop/C455/C455/testdir/assignment2>cd [K[K[Kcd ../
+dndu@ohaton:~/Desktop/C455/C455/testdir>ls
+assignment2  assignment2.tgz
+dndu@ohaton:~/Desktop/C455/C455/testdir>rm assignment2.tgz
+rm: remove regular file 'assignment2.tgz'? c d   y
+dndu@ohaton:~/Desktop/C455/C455/testdir>cd ../
+dndu@ohaton:~/Desktop/C455/C455>ls
+assignment1  assignment2  assignment2.tgz  go0and1  gogui  presubmission.log  testdir
+dndu@ohaton:~/Desktop/C455/C455>rm -rf testdir
+dndu@ohaton:~/Desktop/C455/C455>rm -rf testdir[K[K[K[K[K[K[K[Kp[K presubmission.log 
+dndu@ohaton:~/Desktop/C455/C455>ls
+assignment1  assignment2  assignment2.tgz  go0and1  gogui
+dndu@ohaton:~/Desktop/C455/C455>lsrm -rf presubmission.log [11Ptestdirpresubmission.log [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kas[K[K assignment2.tgz
+dndu@ohaton:~/Desktop/C455/C455>ls
+assignment1  assignment2  go0and1  gogui
+dndu@ohaton:~/Desktop/C455/C455>clear
+[H[2J[3Jdndu@ohaton:~/Desktop/C455/C455>ls
+assignment1  assignment2  go0and1  gogui
+dndu@ohaton:~/Desktop/C455/C455>cd assignment2
+dndu@ohaton:~/Desktop/C455/C455/assignment2>ls
+a2.py  a2test.py  assignment2-public-tests.txt
+dndu@ohaton:~/Desktop/C455/C455/assignment2>vim README.txt
+[?1049h[22;0;0t[>4;2m[?1h=[?2004h[1;29r[?12h[?12l[22;2t[22;1t[27m[23m[29m[m[H[2J[?25l[29;1H"README.txt" [New File][2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[2;1H[94m~                                                                                                                     [3;1H~                                                                                                                     [4;1H~                                                                                                                     [5;1H~                                                                                                                     [6;1H~                                                                                                                     [7;1H~                                                                                                                     [8;1H~                                                                                                                     [9;1H~                                                                                                                     [10;1H~                                                                                                                     [11;1H~                                                                                                                     [12;1H~                                                                                                                     [13;1H~                                                                                                                     [14;1H~                                                                                                                     [15;1H~                                                                                                                     [16;1H~                                                                                                                     [17;1H~                                                                                                                     [18;1H~                                                                                                                     [19;1H~                                                                                                                     [20;1H~                                                                                                                     [21;1H~                                                                                                                     [22;1H~                                                                                                                     [23;1H~                                                                                                                     [24;1H~                                                                                                                     [25;1H~                                                                                                                     [26;1H~                                                                                                                     [27;1H~                                                                                                                     [28;1H~                                                                                                                     [m[29;101H0,0-1[9CAll[1;1H[?25h[27m[23m[29m[m[H[2J[?25l[2;1H[94m~                                                                                                                     [3;1H~                                                                                                                     [4;1H~                                                                                                                     [5;1H~                                                                                                                     [6;1H~                                                                                                                     [7;1H~                                                                                                                     [8;1H~                                                                                                                     [9;1H~                                                                                                                     [10;1H~                                                                                                                     [11;1H~                                                                                                                     [12;1H~                                                                                                                     [13;1H~                                                                                                                     [14;1H~                                                                                                                     [15;1H~                                                                                                                     [16;1H~                                                                                                                     [17;1H~                                                                                                                     [18;1H~                                                                                                                     [19;1H~                                                                                                                     [20;1H~                                                                                                                     [21;1H~                                                                                                                     [22;1H~                                                                                                                     [23;1H~                                                                                                                     [24;1H~                                                                                                                     [25;1H~                                                                                                                     [26;1H~                                                                                                                     [27;1H~                                                                                                                     [28;1H~                                                                                                                     [m[29;101H0,0-1[9CAll"README.txt" [New File][1;1H[?25h[?25l[29;91Hd[1;1H[?25h[?25l[29;92Hn[1;1H[29;1H/\<Find\> [29;11H[K[29;1H[38;5;224msearch hit BOTTOM, continuing at TOP[m[97m[41mE486: Pattern not found: \<Find\>[m[29;34H[K[1;1H[29;101H0,0-1[9CAll[1;1H[?25h[?25l[29;91Hi[1;1H[29;91H [1;1H[29;1H[1m-- INSERT --[m[29;13H[K[29;101H0,1[11CAll[1;1H[?25h[?25lD[29;101H1,2[1;2H[?25h[?25ly[29;103H3[1;3H[?25h[?25ll[29;103H4[1;4H[?25h[?25la[29;103H5[1;5H[?25h[?25ln[29;103H6[1;6H[?25h[?25l[29;103H7[1;7H[?25h[?25lD[29;103H8[1;8H[?25h[?25lu[29;103H9[1;9H[?25h[?25l[29;103H10[1;10H[?25h[?25l[29;103H9 [1;9H[?25h[?25l[29;103H10[1;10H[?25h[?25l[29;103H9 [1;9H[?25h[?25l,[29;103H10[1;10H[?25h[?25l[29;104H1[1;11H[?25h[?25ld[29;104H2[1;12H[?25h[?25ln[29;104H3[1;13H[?25h[?25ld[29;104H4[1;14H[?25h[?25lu[29;104H5[1;15H[?25h[?25l[2;1H[K[29;101H2,1 [2;1H[?25h[?25lA[29;103H2[2;2H[?25h[?25lr[29;103H3[2;3H[?25h[?25lc[29;103H4[2;4H[?25h[?25lh[29;103H5[2;5H[?25h[?25li[29;103H6[2;6H[?25h[?25l[29;103H7[2;7H[?25h[?25lP[29;103H8[2;8H[?25h[?25la[29;103H9[2;9H[?25h[?25lt[29;103H10[2;10H[?25h[?25lel[29;104H2[2;12H[?25h[?25l,[29;104H3[2;13H[?25h[?25l[29;104H4[2;14H[?25h[?25l[29;104H3[2;13H[?25h[?25l[2;12H[K[29;104H2[2;12H[?25h[?25l[2;11H[K[29;104H1[2;11H[?25h[?25l[2;10H[K[29;104H0[2;10H[?25h[?25l[2;9H[K[29;103H9 [2;9H[?25h[?25l[2;8H[K[29;103H8[2;8H[?25h[?25l[2;7H[K[29;103H7[2;7H[?25h[?25l[29;103H6[2;6H[?25h[?25l[2;5H[K[29;103H5[2;5H[?25h[?25l[2;4H[K[29;103H4[2;4H[?25h[?25l[2;3H[K[29;103H3[2;3H[?25h[?25l[2;2H[K[29;103H2[2;2H[?25h[?25l[2;1H[K[29;103H1[2;1H[?25h[?25l[94m~                                                                                                                     [m[29;101H1,15[1;15H[?25h[?25l[1;14H[K[29;104H4[1;14H[?25h[?25l[1;13H[K[29;104H3[1;13H[?25h[?25l[1;12H[K[29;104H2[1;12H[?25h[?25l[1;11H[K[29;104H1[1;11H[?25h[?25l[29;104H0[1;10H[?25h[?25l[1;9H[K[29;103H9 [1;9H[?25h[?25l[1;8H[K[29;103H8[1;8H[?25h[?25l[1;7H[K[29;103H7[1;7H[?25h[?25l[29;103H6[1;6H[?25h[?25l[1;5H[K[29;103H5[1;5H[?25h[?25l[1;4H[K[29;103H4[1;4H[?25h[?25l[1;3H[K[29;103H3[1;3H[?25h[?25l[1;2H[K[29;103H2[1;2H[?25h[?25l[1;1H[K[29;103H1[1;1H[?25h[?25lDylan Du 1617085
+Archi Patel 1702692[2;20H[K[29;101H2,20[2;20H[?25h[29;1H[K[2;19H[?25l[29;91H^[[2;19H[29;91H  [2;20H[29;101H2,19[10CAll[2;19H[?25h[?25l[29;91H:[2;19H[29;91H[K[29;1H:[?2004h[?25hwq[?25l[?2004l"README.txt" [New] 2L, 37C written[23;2t[23;1t
+[?2004l[?1l>[?25h[>4;m[?1049l[23;0;0tdndu@ohaton:~/Desktop/C455/C455/assignment2>ls
+README.txt  a2.py  a2test.py  assignment2-public-tests.txt
+dndu@ohaton:~/Desktop/C455/C455/assignment2>clear
+[H[2J[3Jdndu@ohaton:~/Desktop/C455/C455/assignment2>ls
+README.txt  a2.py  a2test.py  assignment2-public-tests.txt
+dndu@ohaton:~/Desktop/C455/C455/assignment2>cd ../
+dndu@ohaton:~/Desktop/C455/C455>ls
+assignment1  assignment2  go0and1  gogui
+dndu@ohaton:~/Desktop/C455/C455>tar --exclude=.DS_Store --exclude='assignment2/' --exclude='assignment2/.nfs000000000000cc980000010b' -cvzf assignment2.tgz assignment2
+assignment2/
+assignment2/README.txt
+assignment2/a2test.py
+assignment2/assignment2-public-tests.txt
+assignment2/a2.py
+dndu@ohaton:~/Desktop/C455/C455>script presubmission.log
+Script started, file is presubmission.log
+dndu@ohaton:~/Desktop/C455/C455>mkdir testdir
+dndu@ohaton:~/Desktop/C455/C455>cp assignment2.tgz testdir/
+dndu@ohaton:~/Desktop/C455/C455>cd testdir
+dndu@ohaton:~/Desktop/C455/C455/testdir>tar -xvzf assignment2.tgz
+assignment2/
+assignment2/README.txt
+assignment2/a2test.py
+assignment2/assignment2-public-tests.txt
+assignment2/a2.py
+dndu@ohaton:~/Desktop/C455/C455/testdir>cd assignment2
+dndu@ohaton:~/Desktop/C455/C455/testdir/assignment2>python3 a2test.py a2.py assignment2-public-tests.txt
+Test 1 / 109 (1%)Test 2 / 109 (2%)Test 3 / 109 (3%)Test 4 / 109 (4%)Test 5 / 109 (5%)Test 6 / 109 (6%)Test 7 / 109 (6%)Test 8 / 109 (7%)Test 9 / 109 (8%)Test 10 / 109 (9%)Test 11 / 109 (10%)Test 12 / 109 (11%)Test 13 / 109 (12%)Test 14 / 109 (13%)Test 15 / 109 (14%)Test 16 / 109 (15%)Test 17 / 109 (16%)Test 18 / 109 (17%)Test 19 / 109 (17%)Test 20 / 109 (18%)Test 21 / 109 (19%)Test 22 / 109 (20%)Test 23 / 109 (21%)Test 24 / 109 (22%)Test 25 / 109 (23%)Test 26 / 109 (24%)Test 27 / 109 (25%)Test 28 / 109 (26%)Test 29 / 109 (27%)Test 30 / 109 (28%)Test 31 / 109 (28%)Test 32 / 109 (29%)Test 33 / 109 (30%)Test 34 / 109 (31%)Test 35 / 109 (32%)Test 36 / 109 (33%)Test 37 / 109 (34%)Test 38 / 109 (35%)Test 39 / 109 (36%)Test 40 / 109 (37%)Test 41 / 109 (38%)Test 42 / 109 (39%)Test 43 / 109 (39%)Test 44 / 109 (40%)Test 45 / 109 (41%)Test 46 / 109 (42%)Test 47 / 109 (43%)Test 48 / 109 (44%)Test 49 / 109 (45%)Test 50 / 109 (46%)Test 51 / 109 (47%)Test 52 / 109 (48%)Test 53 / 109 (49%)Test 54 / 109 (50%)Test 55 / 109 (50%)Test 56 / 109 (51%)Test 57 / 109 (52%)Test 58 / 109 (53%)Test 59 / 109 (54%)Test 60 / 109 (55%)Test 61 / 109 (56%)Test 62 / 109 (57%)Test 63 / 109 (58%)Test 64 / 109 (59%)Test 65 / 109 (60%)Test 66 / 109 (61%)Test 67 / 109 (61%)Test 68 / 109 (62%)Test 69 / 109 (63%)Test 70 / 109 (64%)Test 71 / 109 (65%)Test 72 / 109 (66%)Test 73 / 109 (67%)Test 74 / 109 (68%)Test 75 / 109 (69%)Test 76 / 109 (70%)Test 77 / 109 (71%)Test 78 / 109 (72%)Test 79 / 109 (72%)Test 80 / 109 (73%)Test 81 / 109 (74%)Test 82 / 109 (75%)Test 83 / 109 (76%)Test 84 / 109 (77%)Test 85 / 109 (78%)Test 86 / 109 (79%)Test 87 / 109 (80%)Test 88 / 109 (81%)Test 89 / 109 (82%)Test 90 / 109 (83%)Test 91 / 109 (83%)Test 92 / 109 (84%)Test 93 / 109 (85%)Test 94 / 109 (86%)Test 95 / 109 (87%)Test 96 / 109 (88%)Test 97 / 109 (89%)Test 98 / 109 (90%)Test 99 / 109 (91%)Test 100 / 109 (92%)Test 101 / 109 (93%)Test 102 / 109 (94%)Test 103 / 109 (94%)Test 104 / 109 (95%)Test 105 / 109 (96%)Test 106 / 109 (97%)Test 107 / 109 (98%)Test 108 / 109 (99%)Test 109 / 109 (100%)
+[34m	Failed commands (0):
+[0m
+[34m	Successful commands with mismatched outputs: (4):
+[0m
+=== Test 41 === 
+Command: 'solve'
+Expected: 
+'
+1 5 0 1
+= 1
+'
+Received: 
+'
+[32m[0m[31mu[0m[31mn[0m[31mk[0m[31mn[0m[31mo[0m[31mw[0m[31mn
+= 1[0m'
+This command will be marked.
+
+=== Test 50 === 
+Command: 'solve'
+Expected: 
+'
+2
+= 1
+'
+Received: 
+'
+[32m[0m[31mu[0m[31mn[0m[31mk[0m[31mn[0m[31mo[0m[31mw[0m[31mn[0m[31m
+[0m[31m=[0m[31m [0m[31m1[0m'
+This command will be marked.
+
+=== Test 57 === 
+Command: 'solve'
+Expected: 
+'
+2
+= 1
+'
+Received: 
+'
+[32m[0m[31mu[0m[31mn[0m[31mk[0m[31mn[0m[31mo[0m[31mw[0m[31mn[0m[31m
+[0m[31m=[0m[31m [0m[31m1[0m'
+This command will be marked.
+
+=== Test 69 === 
+Command: 'solve'
+Expected: 
+'
+1
+= 1
+'
+Received: 
+'
+[32m[0m[31mu[0m[31mn[0m[31mk[0m[31mn[0m[31mo[0m[31mw[0m[31mn[0m[31m
+[0m[31m=[0m[31m [0m[31m1[0m'
+This command will be marked.
+
+[34m	Summary report:
+[0m
+109 Tests performed
+[32m105 Successful (96%)[0m
+[31m0 Failed (0%)[0m
+[31m4 Mismatched (4%)[0m
+[34m	Marks report:
+[0m
+6 / 10 marked tests = 1.2 / 2.0 marks.
+
+Finished in 222.5 seconds.
+dndu@ohaton:~/Desktop/C455/C455/testdir/assignment2>[Kdndu@ohaton:~/Desktop/C455/C455/testdir/assignment2>[Kdndu@ohaton:~/Desktop/C455/C455/testdir/assignment2>[Kdndu@ohaton:~/Desktop/C455/C455/testdir/assignment2>[Kdndu@ohaton:~/Desktop/C455/C455/testdir/assignment2>exit
+exit
+Script done, file is presubmission.log
+dndu@ohaton:~/Desktop/C455/C455>ls
+assignment1  assignment2.tgz  gogui		 testdir
+assignment2  go0and1	      presubmission.log
+dndu@ohaton:~/Desktop/C455/C455>vi presubmission.log 
+[?1049h[22;0;0t[1;24r(B[m[4l[?7h[?1h=[H[2JScript started on 2024-10-07 21:58:18-06:00 [TERM="xterm-256color" TTY="/dev/pts[2;1H/38" COLUMNS="118" LINES="29"][3ddndu@ohaton:~/Desktop/C455/C455>mkdir testdir^M[4ddndu@ohaton:~/Desktop/C455/C455>cp assignment2.tgz testdir/^M[5ddndu@ohaton:~/Desktop/C455/C455>cd testdir^M[6ddndu@ohaton:~/Desktop/C455/C455/testdir>tar -xvzf assignment2.tgz^M[7dassignment2/^M[8dassignment2/README.txt^M[9dassignment2/a2test.py^M[10dassignment2/assignment2-public-tests.txt^M[11dassignment2/a2.py^M[12ddndu@ohaton:~/Desktop/C455/C455/testdir>cd assignment2^M[13ddndu@ohaton:~/Desktop/C455/C455/testdir/assignment2>python3 a2test.py a2.py assi[14;1Hgnment2-public-tests.txt^M[15dTest 1 / 109 (1%)^MTest 2 / 109 (2%)^MTest 3 / 109 (3%)^MTest 4 / 109 (4%)^MTest[16;2H5 / 109 (5%)^MTest 6 / 109 (6%)^MTest 7 / 109 (6%)^MTest 8 / 109 (7%)^MTest 9 /[17;2H109 (8%)^MTest 10 / 109 (9%)^MTest 11 / 109 (10%)^MTest 12 / 109 (11%)^MTest 13[18;2H/ 109 (12%)^MTest 14 / 109 (13%)^MTest 15 / 109 (14%)^MTest 16 / 109 (15%)^MTes[19;1Ht 17 / 109 (16%)^MTest 18 / 109 (17%)^MTest 19 / 109 (17%)^MTest 20 / 109 (18%)^[20;1HMTest 21 / 109 (19%)^MTest 22 / 109 (20%)^MTest 23 / 109 (21%)^MTest 24 / 109 (2[21;1H2%)^MTest 25 / 109 (23%)^MTest 26 / 109 (24%)^MTest 27 / 109 (25%)^MTest 28 / 10[22;1H9 (26%)^MTest 29 / 109 (27%)^MTest 30 / 109 (28%)^MTest 31 / 109 (28%)^MTest 32[23d/ 109 (29%)^MTest 33 / 109 (30%)^MTest 34 / 109 (31%)^MTest 35 / 109 (32%)^MTest[1;1H[24dpresubmission.log: unmodified: line 1[H[24d[J[3d[4d[5d[6d[7d[8d[10d[13d[H109 (64%)^MTest 71 / 109 (65%)^MTest 72 / 109 (66%)^MTest 73 / 109 (67%)^MTest 7[2;1H4 / 109 (68%)^MTest 75 / 109 (69%)^MTest 76 / 109 (70%)^MTest 77 / 109 (71%)^MTe[3;1Hst 78 / 109 (72%)^MTest 79 / 109 (72%)^MTest 80 / 109 (73%)^MTest 81 / 109 (74%)[4;1H^MTest 82 / 109 (75%)^MTest 83 / 109 (76%)^MTest 84 / 109 (77%)^MTest 85 / 109 ([5;1H78%)^MTest 86 / 109 (79%)^MTest 87 / 109 (80%)^MTest 88 / 109 (81%)^MTest 89 / 1[6;1H09 (82%)^MTest 90 / 109 (83%)^MTest 91 / 109 (83%)^MTest 92 / 109 (84%)^MTest 93[7;1H / 109 (85%)^MTest 94 / 109 (86%)^MTest 95 / 109 (87%)^MTest 96 / 109 (88%)^MTes[8;1Ht 97 / 109 (89%)^MTest 98 / 109 (90%)^MTest 99 / 109 (91%)^MTest 100 / 109 (92%)[9;1H^MTest 101 / 109 (93%)^MTest 102 / 109 (94%)^MTest 103 / 109 (94%)^MTest 104 / 1[10;1H09 (95%)^MTest 105 / 109 (96%)^MTest 106 / 109 (97%)^MTest 107 / 109 (98%)^MTest[11;1H 108 / 109 (99%)^MTest 109 / 109 (100%)^M^M[12d^[[34m  Failed commands (0):^M[K[13d^[[0m^M[K[14d^[[34m  Successful commands with mismatched outputs: (4):^M[15d^[[0m^M[K[16d=== Test 41 === ^M[K[17dCommand: 'solve'^M[K[18dExpected: ^M[K[19d'^M[K[20d1 5 0 1^M[K[21d= 1^M[K[22d'^M[K[23dReceived: ^M[K[12d^[13d[14d[15d[16d[17d[18d[19d[20d[21d[22d[23d[24d
+[A'^M[24d
+[A^[[32m^[[0m^[[31mu^[[0m^[[31mn^[[0m^[[31mk^[[0m^[[31mn^[[0m^[[31mo^[[0m^[[31mw^[[23;2H[24d[2S[22d[0m^[[31mn^M[23d= 1^[[0m'^M[24d
+[AThis command will be marked.^M[24d
+[A^M[24d
+[A=== Test 50 === ^M[24d
+[
