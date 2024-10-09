@@ -17,8 +17,8 @@ def generate(n, x):
 
 
 if __name__ == "__main__":
-  group = generate(n=9, x=28)
-  print("Cyclic Group: ")
+  group = generate(n=50, x=20)
+  print("Cyclic SubGroup: ")
   print(group)
 
   print("Smallest Generator [d]: ")
