@@ -69,21 +69,20 @@ class CommandInterface:
 
     # Convert a raw string to a command and a list of arguments
     def process_command(self, str):
-        # str = str.lower().strip()
-        # command = str.split(" ")[0]
-        # args = [x for x in str.split(" ")[1:] if len(x) > 0]
-        # if command not in self.command_dict:
-        #     print("? Uknown command.\nType 'help' to list known commands.", file=sys.stderr)
-        #     print("= -1\n")
-        #     return False
-        # try:
-        #     return self.command_dict[command](args)
-        # except Exception as e:
-        #     print("Command '" + str + "' failed with exception:", file=sys.stderr)
-        #     print(e, file=sys.stderr)
-        #     print("= -1\n")
-        #     return False
-        pass
+        str = str.lower().strip()
+        command = str.split(" ")[0]
+        args = [x for x in str.split(" ")[1:] if len(x) > 0]
+        if command not in self.command_dict:
+            print("? Uknown command.\nType 'help' to list known commands.", file=sys.stderr)
+            print("= -1\n")
+            return False
+        try:
+            return self.command_dict[command](args)
+        except Exception as e:
+            print("Command '" + str + "' failed with exception:", file=sys.stderr)
+            print(e, file=sys.stderr)
+            print("= -1\n")
+            return False
         
     # Will continuously receive and execute commands
     # Commands should return True on success, and False on failure
@@ -417,9 +416,10 @@ class CommandInterface:
     def code(self):
         # Returns the encoded (tuple) version of our current state
         # Map each row into a tuple. Then wrap all rows in a tuple.
-        return "".join(map(str, self.grid))+str(self.player) # (code(s), data(s)) # https://webdocs.cs.ualberta.ca/~mmueller/courses/cmput455/slides/lecture10.pdf
+        board_tuple = tuple(map(tuple, self.grid))  # Ex: ((1, 0), ('.', 1))
+        return (board_tuple, self.player) 
         
-    def negamaxBoolean(self, tt, legalmoves):
+    def negamaxBoolean(self, tt):
         # negamaxBoolean is always in perspective of current player (self.player)
         result = tt.lookup(self.code())
         if result != None:
@@ -427,10 +427,9 @@ class CommandInterface:
         if self.endOfGame():
             result = self.staticallyEvaluateForToPlay()
             return self.storeResult(tt, result) 
-        for move in legalmoves:
+        for move in self.getLegalMoves():
             self.play(move)
-            legalmoves.remove(move)
-            success = not self.negamaxBoolean(tt, legalmoves)
+            success = not self.negamaxBoolean(tt)
             self.winning_move = move
             self.undoMove(move)
             if success:
@@ -441,11 +440,11 @@ class CommandInterface:
         # At end of Binary Game, whoever is the current player loses
         return False # current player loses
     
+
     # New function to be implemented for assignment 2
     def solve(self, args):
         # Instantiate our Transposition Table
         tt = TranspositionTable()
-        legalmoves = self.getLegalMoves()
 
         # Raise a TimeoutError after a certain time limit is reached.
         signal.signal(signal.SIGALRM, self.handler)
@@ -453,16 +452,16 @@ class CommandInterface:
 
         try:    
             # Solving always starts with the current player (toPlay) going first
-            if self.negamaxBoolean(tt, legalmoves):
+            if self.negamaxBoolean(tt):
                 # Current Player has a winning solution
                 print(f'{self.player} {self.winning_move[0]} {self.winning_move[1]} {self.winning_move[2]}')  # Output: winner <move>. Where move is formatted as: x y digit
             else:
                 # See if other player has a winning solution
-                for move in legalmoves:
+                for move in self.getLegalMoves():
                     self.play(move) 
 
                     # Find a winning response
-                    if not self.negamaxBoolean(tt, legalmoves):
+                    if not self.negamaxBoolean(tt):
                         # Other player cannot find a winning solution
                         print("unknown") # Neither perspective is solved.
                         self.undoMove(move)
